@@ -20,6 +20,8 @@ import com.example.netbooks.models.User;
 import com.example.netbooks.models.VerificationToken;
 import com.example.netbooks.services.UserManager;
 import com.example.netbooks.services.VerificationTokenManager;
+import java.util.LinkedList;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -33,14 +35,9 @@ public class AuthenticationController {
     EmailSender emailSender;
     private final Logger logger = LogManager.getLogger(AuthenticationController.class);
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public String firstPage() {
-        return "qwer";
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void registerUser(User user) {
-        if (userManager.RegisterUser(user)) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+    public void registerUser(@RequestBody User user) {
+        if (userManager.GetUserByMail(user) == null) {
             VerificationToken VerTok = verificationTokenManager.SaveToken(user);
             emailSender.sendMessage(user.getEmail(), "Complete Registration!", VerTok.getVerificationToken());
             logger.info("Complete Registration!" + user.getFirstName());
@@ -50,18 +47,65 @@ public class AuthenticationController {
         }
     }
 
-    @RequestMapping(value = "/verification-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public void confirmUserAccount(@RequestParam("token") String verificationToken) {
+    @RequestMapping(value = "/verification-account", method = {RequestMethod.POST})
+    public void confirmUserAccount(@RequestBody String verificationToken) {
         VerificationToken token = verificationTokenManager.FindVerificationToken(verificationToken);
 
         if (token != null) {
-            userManager.SaveUser(userManager.GetUserByMail(token.getUser()));
-            //todo smth message for clien (account Verified)
+            userManager.SaveUser(token.getUser());
+            verificationTokenManager.RemoveVerificationToken(verificationToken);
         } else {
 
             //todo smth message for clien (link is invalid)
         }
 
     }
+    
+    //принимает строку имейла юзера и создает ему новый акк с ролью админа
+    @RequestMapping(value = "/createAdmin", method = RequestMethod.POST)
+    public void CreateAdmin(@RequestBody String mail) {
+        User user = userManager.GetUserByMail(mail);
+        if (user != null) {
+            user = userManager.CreateAdmin(user);
+            if(user != null)
+            {
+            emailSender.sendMessage(mail, 
+                    "Complete admin registration!", 
+                    user.getPassword());
+            logger.info("Complete Registration!" + user.getFirstName());
+            }
+        } else {
+            logger.info("Registration failed!");
 
+        }
+    }
+    
+    @RequestMapping(value = "/createModerator", method = RequestMethod.POST)
+    public void CreateModerator(@RequestBody String mail) {
+        User user = userManager.GetUserByMail(mail);;
+        if (user != null) {
+            user = userManager.CreateModerator(user);
+             if(user != null)
+             {
+            emailSender.sendMessage(mail, 
+                    "Complete admin registration!", 
+                    user.getPassword());
+            logger.info("Complete Registration!" + user.getFirstName());
+             }
+        } else {
+            logger.info("Registration failed!");
+
+        }
+    }
+    
+    
+    @RequestMapping(value = "/Users", method = {RequestMethod.GET, RequestMethod.POST})
+    public LinkedList<User> getAllUsers() {
+        return userManager.GetAllUsers();
+    }
+    
+    @RequestMapping(value = "/Tokens", method = {RequestMethod.GET, RequestMethod.POST})
+    public LinkedList<VerificationToken> getAllVerificationTokens() {
+        return verificationTokenManager.GetAllVerificationTokens();
+    }
 }

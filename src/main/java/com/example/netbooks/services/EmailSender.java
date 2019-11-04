@@ -37,5 +37,21 @@ public class EmailSender {
             //System.out.println("error");
         }
     }
+    public void sendNewPasswordMessage(String emailTo, String subject, String password) {
+        
+        SimpleMailMessage simpleMessage = new SimpleMailMessage();
+        simpleMessage.setSubject(subject);
+        simpleMessage.setText("Your new password is" + password);
+        simpleMessage.setTo(emailTo);
+
+        try {
+            emailSender.send(simpleMessage);
+            logger.info("email for" + emailTo + "was sent");
+            //System.out.println("ok");
+        } catch (Exception e) {
+            logger.info("ERROR: email for" + emailTo + "was not sent");
+            //System.out.println("error");
+        }
+    }
 
 }
