@@ -1,0 +1,7 @@
+com\example\netbooks\dao\UserRepository.class
+com\example\netbooks\NetbooksApplication.class
+com\example\netbooks\services\User.class
+com\example\netbooks\services\VerificationToken.class
+com\example\netbooks\dao\VerificationTokenRepository.class
+com\example\netbooks\services\EmailSender.class
+com\example\netbooks\controllers\AuthenticationController.class
