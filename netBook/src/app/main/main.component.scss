@@ -1,0 +1,10 @@
+.WrapperContent {
+  display: none;
+  grid-template-columns: 0.2fr 1fr;
+  background-color: #334955;
+  .OutletMenu{
+    display: grid;
+    border-left: solid;
+    border-color: #1a252b;
+  }
+}
