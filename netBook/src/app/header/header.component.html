@@ -1,0 +1,109 @@
+
+
+<header class="main-header">
+
+  <div class="logo-grid">
+    <img src="../../assets/img/label.png" alt="Example" class="img-logo">
+  </div>
+<!--              POPUP-->
+
+  <div class="form-popup" id="myForm">
+    <form  class="form-container" (submit)="login($event)">
+      <h2>Login</h2>
+
+      <label><b>Nickname</b></label>
+      <input type="text" placeholder="Enter your name" name="email" required id = "lnickname">
+
+      <label><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required id = "lpasswords">
+
+      <input type="submit" class="btn" value = "Login" (click)="openContent($event)">
+      <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
+    </form>
+  </div>
+
+  <div class="form-popup" id="myForm2">
+    <form class="form-container" (submit)="register($event)">
+      <h2>Registration</h2>
+
+      <label><b>First Name</b></label>
+      <input type="text" placeholder="Enter your name" name="name" required id = "name">
+
+      <label><b>Last Name</b></label>
+      <input type="text" placeholder="Enter last name" name="lname" required id = "lname">
+
+      <label><b>Username</b></label>
+      <input type="text" placeholder="Enter username" name="username" required id = "username">
+
+      <label><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="passwords" required id = "passwords">
+
+
+
+      <input type="submit" class="btn" value = "Registration" >
+      <button type="button" class="btn cancel" (click)="closeForm2()">Close</button>
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+  <!--<div class="form-popup" id="myForm">-->
+    <!--<form  class="form-container" (submit)="login($event)">-->
+      <!--<h2>Login</h2>-->
+
+      <!--<label><b>Nickname</b></label>-->
+      <!--<input type="text" placeholder="Enter your name" name="email" required id = "rnickname">-->
+
+      <!--<label><b>Password</b></label>-->
+      <!--<input type="password" placeholder="Enter Password" name="psw" required id = "rpasswords">-->
+
+      <!--<input type="submit" class="btn" value = "Login" (click)="openContent($event)">-->
+      <!--<button type="button" class="btn cancel" (click)="closeForm()">Close</button>-->
+    <!--</form>-->
+  <!--</div>-->
+
+  <!--<div class="form-popup" id="myForm2">-->
+    <!--<form class="form-container" (submit)="login2($event)">-->
+      <!--<h2>Registration</h2>-->
+
+      <!--<label><b>Name</b></label>-->
+      <!--<input type="text" placeholder="Enter your name" name="email" required id = "name">-->
+
+      <!--<label><b>Login</b></label>-->
+      <!--<input type="text" placeholder="Enter login" name="login" required id = "login">-->
+
+      <!--<label><b>E-mail</b></label>-->
+      <!--<input type="text" placeholder="Enter e-mail" name="mail" required id = "email">-->
+
+      <!--<label><b>Password</b></label>-->
+      <!--<input type="password" placeholder="Enter Password" name="psw" required id = "passwords">-->
+
+
+
+      <!--<input type="submit" class="btn" value = "Registration" >-->
+      <!--<button type="button" class="btn cancel" (click)="closeForm2()">Close</button>-->
+    <!--</form>-->
+  <!--</div>-->
+<!--                POPUP       -->
+
+
+
+  <div class="buttons-grid" id="buttons-grid">
+
+    <div class="header-buttons">
+      <button class="button" (click)="openForm2()">Register</button>
+      <button class="button button-gray" (click)="openForm()">Login</button>
+    </div>
+
+
+  </div>
+  <div class="auth" id="auth">
+    <button>Close</button>
+  </div>
+
+</header>
